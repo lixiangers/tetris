@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>疯狂俄罗斯方块</title>
+    <script type="text/javascript" src="my.js"></script>
+    <style type="text/css">
+        @font-face {
+            font-family: tmb;
+            src: url("DS-DIGIB.TTF") format("TrueType");
+        }
+        body>div{
+            font-size: 13pt;
+            padding: 8px;
+        }
+        span {
+            font-family: tmb;
+            font-size: 20pt;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<h2>疯狂俄罗斯方块</h2>
+
+<div style="width: 336px;border: 1px solid black;background:#ff9;overflow: hidden">
+    <div style="float: left;">速度:<span id="curSpeedEle">1</span> 当前积分:<span id="curScoreEle">2</span></div>
+    <div style="float: right;">最高积分:<span id="maxScoreEle">3</span></div>
+</div>
+</body>
+</html>
