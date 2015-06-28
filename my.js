@@ -23,11 +23,136 @@ var tetris_canvas;
 //画布2D对象
 var tetris_ctx;
 
-window.onload = function()
-{
-    // 创建canvas组件
-    createCanvas(TETRIS_ROWS , TETRIS_COLS , CELL_SIZE , CELL_SIZE);
-    document.body.appendChild(tetris_canvas);
+//数据对应的html元素
+var curScoreEle, curSpeedEle, maxScoreEle;
+
+// 记录当前积分
+var curScore = 0;
+// 记录当前速度
+var curSpeed = 1;
+// 记录曾经的最高积分
+var maxScore = 0;
+
+// 该数组用于记录底下已经固定下来的方块。
+var tetris_status = [];
+
+// 记录正在下掉的四个方块
+var currentFall;
+
+// 定义方块的颜色
+colors = ["#fff", "#f00", "#0f0", "#00f"
+    , "#c60", "#f0f", "#0ff", "#609"];
+
+// 定义几种可能出现的方块组合
+var blockArr = [
+    // 代表第一种可能出现的方块组合：Z
+    [
+        {x: TETRIS_COLS / 2 - 1, y: 0, color: 1},
+        {x: TETRIS_COLS / 2, y: 0, color: 1},
+        {x: TETRIS_COLS / 2, y: 1, color: 1},
+        {x: TETRIS_COLS / 2 + 1, y: 1, color: 1}
+    ],
+    // 代表第二种可能出现的方块组合：反Z
+    [
+        {x: TETRIS_COLS / 2 + 1, y: 0, color: 2},
+        {x: TETRIS_COLS / 2, y: 0, color: 2},
+        {x: TETRIS_COLS / 2, y: 1, color: 2},
+        {x: TETRIS_COLS / 2 - 1, y: 1, color: 2}
+    ],
+    // 代表第三种可能出现的方块组合： 田
+    [
+        {x: TETRIS_COLS / 2 - 1, y: 0, color: 3},
+        {x: TETRIS_COLS / 2, y: 0, color: 3},
+        {x: TETRIS_COLS / 2 - 1, y: 1, color: 3},
+        {x: TETRIS_COLS / 2, y: 1, color: 3}
+    ],
+    // 代表第四种可能出现的方块组合：L
+    [
+        {x: TETRIS_COLS / 2 - 1, y: 0, color: 4},
+        {x: TETRIS_COLS / 2 - 1, y: 1, color: 4},
+        {x: TETRIS_COLS / 2 - 1, y: 2, color: 4},
+        {x: TETRIS_COLS / 2, y: 2, color: 4}
+    ],
+    // 代表第五种可能出现的方块组合：J
+    [
+        {x: TETRIS_COLS / 2, y: 0, color: 5},
+        {x: TETRIS_COLS / 2, y: 1, color: 5},
+        {x: TETRIS_COLS / 2, y: 2, color: 5},
+        {x: TETRIS_COLS / 2 - 1, y: 2, color: 5}
+    ],
+    // 代表第六种可能出现的方块组合 : 条
+    [
+        {x: TETRIS_COLS / 2, y: 0, color: 6},
+        {x: TETRIS_COLS / 2, y: 1, color: 6},
+        {x: TETRIS_COLS / 2, y: 2, color: 6},
+        {x: TETRIS_COLS / 2, y: 3, color: 6}
+    ],
+    // 代表第七种可能出现的方块组合 : ┵
+    [
+        {x: TETRIS_COLS / 2, y: 0, color: 7},
+        {x: TETRIS_COLS / 2 - 1, y: 1, color: 7},
+        {x: TETRIS_COLS / 2, y: 1, color: 7},
+        {x: TETRIS_COLS / 2 + 1, y: 1, color: 7}
+    ]
+];
+
+
+function initView() {
+    curScoreEle = document.getElementById("curSpeedEle");
+    curSpeedEle = document.getElementById("curScoreEle");
+    maxScoreEle = document.getElementById("maxScoreEle");
+}
+function initData() {
+// 读取Local Storage里的curScore记录
+    curScore = localStorage.getItem("curScore");
+    curScore = curScore == null ? 0 : parseInt(curScore);
+    curScoreEle.innerHTML = curScore;
+
+    // 读取Local Storage里的maxScore记录
+    maxScore = localStorage.getItem("maxScore");
+    maxScore = maxScore == null ? 0 : parseInt(maxScore);
+    maxScoreEle.innerHTML = maxScore;
+
+    // 读取Local Storage里的curSpeed记录
+    curSpeed = localStorage.getItem("curSpeed");
+    curSpeed = curSpeed == null ? 1 : parseInt(curSpeed);
+    curSpeedEle.innerHTML = curSpeed;
+
+    // 读取Local Storage里的tetris_status记录
+    var tmpStatus = localStorage.getItem("tetris_status");
+    tetris_status = tmpStatus == null ? tetris_status : JSON.parse(tmpStatus);
+}
+function addCanvas() {
+// 创建canvas组件
+    createCanvas(TETRIS_ROWS, TETRIS_COLS, CELL_SIZE, CELL_SIZE);
+    document.body.appendtChild(tetris_canvas);
+}
+var initBlock = function () {
+    var rand = Math.floor(Math.random() * blockArr.length);
+    currentFall = [
+        {
+            x: blockArr[rand][0].x, y: blockArr[rand][0].y
+            , color: blockArr[rand][0].color
+        },
+        {
+            x: blockArr[rand][1].x, y: blockArr[rand][1].y
+            , color: blockArr[rand][1].color
+        },
+        {
+            x: blockArr[rand][2].x, y: blockArr[rand][2].y
+            , color: blockArr[rand][2].color
+        },
+        {
+            x: blockArr[rand][3].x, y: blockArr[rand][3].y
+            , color: blockArr[rand][3].color
+        }
+    ];
+};
+window.onload = function () {
+    addCanvas();
+    initView();
+    initData();
+    initBlock();
 };
 
 var createCanvas = function (rows, cols, cellWidth, cellHeight) {
