@@ -38,12 +38,7 @@ var NO_BLOCK = 0;
 
 // 该数组用于记录底下已经固定下来的方块。
 var tetris_status = [];
-for (var i = 0; i < TETRIS_ROWS; i++) {
-    tetris_status[i] = [];
-    for (var j = 0; j < TETRIS_COLS; j++) {
-        tetris_status[i][j] = NO_BLOCK;
-    }
-}
+
 
 // 记录正在下掉的四个方块
 var currentFall;
@@ -127,6 +122,14 @@ function initData() {
     curSpeed = localStorage.getItem("curSpeed");
     curSpeed = curSpeed == null ? 1 : parseInt(curSpeed);
     curSpeedEle.innerHTML = curSpeed;
+
+    //默认每个方格都没有
+    for (var i = 0; i < TETRIS_ROWS; i++) {
+        tetris_status[i] = [];
+        for (var j = 0; j < TETRIS_COLS; j++) {
+            tetris_status[i][j] = NO_BLOCK;
+        }
+    }
 
     // 读取Local Storage里的tetris_status记录
     var tmpStatus = localStorage.getItem("tetris_status");
@@ -215,6 +218,18 @@ var createCanvas = function (rows, cols, cellWidth, cellHeight) {
     tetris_ctx.stroke();
 };
 
+
+window.onkeydown = function (evt) {
+    switch (evt.keyCode) {
+        // 按下了“向下”箭头
+        case 40:
+            if (!isPlaying)
+                return;
+            moveDown();
+            break;
+    }
+};
+
 //向下移动
 var moveDown = function () {
     // 定义能否下掉的旗标
@@ -290,7 +305,7 @@ var moveDown = function () {
         lineFull();
         // 使用Local Storage记录俄罗斯方块的游戏状态
         localStorage.setItem("tetris_status", JSON.stringify(tetris_status));
-        // 开始一组新的方块。
+        //原来的一组到底后 开始一组新的方块。
         initBlock();
     }
 };
@@ -307,6 +322,11 @@ var lineFull = function () {
 
         // 如果当前行已全部有方块了
         if (flag) {
+            // 将当前积分增加100
+            curScoreEle.innerHTML = curScore += 100;
+            // 记录当前积分
+            localStorage.setItem("curScore", curScore);
+
             // 把当前行的所有方块下移一行。
             for (var k = i; k > 0; k--) {
                 for (var l = 0; l < TETRIS_COLS; l++) {
@@ -327,5 +347,82 @@ window.onkeydown = function (evt) {
                 return;
             moveDown();
             break;
+        // 按下了“向左”箭头
+        case 37:
+            if (!isPlaying)
+                return;
+            moveLeft();
+            break;
+        // 按下了“向右”箭头
+        case 39:
+            if (!isPlaying)
+                return;
+            moveRight();
+            break;
     }
-}
+};
+
+var moveLeft = function () {
+    var canLeft = true;
+    for (var i = 0; i < currentFall.length; i++) {
+        var cur = currentFall[i];
+        if (cur.x <= 0) {
+            canLeft = false;
+            break;
+        }
+
+        if (tetris_status[cur.y][cur.x - 1] != NO_BLOCK) {
+            canLeft = false;
+            break;
+        }
+    }
+
+    if (canLeft) {
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            tetris_ctx.fillStyle = "white";
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1, cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+
+            cur.x--;
+        }
+
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            tetris_ctx.fillStyle = colors[cur.color];
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1, cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+        }
+    }
+};
+
+
+var moveRight = function () {
+    var canRight = true;
+    for (var i = 0; i < currentFall.length; i++) {
+        var cur = currentFall[i];
+        if (cur.x >= TETRIS_COLS - 1) {
+            canRight = false;
+            break;
+        }
+
+        if (tetris_status[cur.y][cur.x + 1] != NO_BLOCK) {
+            canRight = false;
+            break;
+        }
+    }
+
+    if (canRight) {
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            tetris_ctx.fillStyle = "white";
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1, cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+
+            cur.x++;
+        }
+
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            tetris_ctx.fillStyle = colors[cur.color];
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1, cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+        }
+    }
+};
