@@ -106,8 +106,8 @@ var curTimer;
 
 
 function initView() {
-    curScoreEle = document.getElementById("curSpeedEle");
-    curSpeedEle = document.getElementById("curScoreEle");
+    curSpeedEle = document.getElementById("curSpeedEle");
+    curScoreEle = document.getElementById("curScoreEle");
     maxScoreEle = document.getElementById("maxScoreEle");
 }
 function initData() {
