@@ -101,6 +101,9 @@ var blockArr = [
     ]
 ];
 
+//执行向下timer
+var curTimer;
+
 
 function initView() {
     curScoreEle = document.getElementById("curSpeedEle");
@@ -181,12 +184,16 @@ function drawBlock() {
         }
     }
 }
+function startTimer() {
+    curTimer = setInterval("moveDown()", 500 / curSpeed);
+}
 window.onload = function () {
     addCanvas();
     initView();
     initData();
     initBlock();
     drawBlock();
+    startTimer();
 };
 
 var createCanvas = function (rows, cols, cellWidth, cellHeight) {
@@ -283,6 +290,7 @@ var moveDown = function () {
                 localStorage.removeItem("curScore");
                 localStorage.removeItem("tetris_status");
                 localStorage.removeItem("curSpeed");
+                clearInterval(curTimer);
                 isPlaying = false;
                 if (confirm("���Ѿ����ˣ��Ƿ����������")) {
                     // ��ȡLocal Storage���maxScore��¼
