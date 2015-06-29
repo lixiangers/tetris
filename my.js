@@ -1,98 +1,98 @@
 /**
  * Created by zky-android on 2015/6/26.
  */
-//ппйЩ
+//О©╫О©╫О©╫О©╫
 var TETRIS_ROWS = 20;
-//апйЩ
+//О©╫О©╫О©╫О©╫
 var TETRIS_COLS = 20;
-//ц©р╩╦Ж╥╫©И╣д©М║╒╦ъ
+//ц©р╩О©╫О©╫О©╫О©╫О©╫О©╫д©О©╫О©╫О©╫
 var CELL_SIZE = 24;
 
-// ╪гб╪╣╠г╟╩Щ╥ж
+// О©╫О©╫б╪О©╫О©╫г╟О©╫О©╫О©╫О©╫
 var curScore = 0;
-// ╪гб╪╣╠г╟кы╤х
+// О©╫О©╫б╪О©╫О©╫г╟О©╫ы╤О©╫
 var curSpeed = 1;
-// ╪гб╪тЬ╬╜╣двН╦ъ╩Щ╥ж
+// О©╫О©╫б╪О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ъ╩О©╫О©╫О©╫
 var maxScore = 0;
 
-// ╪гб╪╣╠г╟йг╥Ясно╥жп╣дфЛ╠Й
+// О©╫О©╫б╪О©╫О©╫г╟О©╫г╥О©╫О©╫О©╫о╥О©╫п╣О©╫О©╫О©╫О©╫
 var isPlaying = true;
 
-//╩╜╡╪
+//О©╫О©╫О©╫О©╫
 var tetris_canvas;
-//╩╜╡╪2D╤тоС
+//О©╫О©╫О©╫О©╫2DО©╫О©╫О©╫О©╫
 var tetris_ctx;
 
-//йЩ╬щ╤тс╕╣дhtmlт╙кь
+//О©╫О©╫О©╫щ╤О©╫с╕О©╫О©╫htmlт╙О©╫О©╫
 var curScoreEle, curSpeedEle, maxScoreEle;
 
-// ╪гб╪╣╠г╟╩Щ╥ж
+// О©╫О©╫б╪О©╫О©╫г╟О©╫О©╫О©╫О©╫
 var curScore = 0;
-// ╪гб╪╣╠г╟кы╤х
+// О©╫О©╫б╪О©╫О©╫г╟О©╫ы╤О©╫
 var curSpeed = 1;
-// ╪гб╪тЬ╬╜╣двН╦ъ╩Щ╥ж
+// О©╫О©╫б╪О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ъ╩О©╫О©╫О©╫
 var maxScore = 0;
 
-// ц╩╥╫©Ийг0
+// ц╩О©╫О©╫О©╫О©╫О©╫О©╫0
 var NO_BLOCK = 0;
 
-// ╦цйЩвИсцсз╪гб╪╣вобря╬╜╧л╤╗обю╢╣д╥╫©И║ё
+// О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫з╪О©╫б╪О©╫О©╫О©╫О©╫О©╫я╬О©╫О©╫л╤О©╫О©╫О©╫О©╫О©╫О©╫д╥О©╫О©╫И║ё
 var tetris_status = [];
 
 
-// ╪гб╪уЩтзоб╣Т╣дкд╦Ж╥╫©И
+// О©╫О©╫б╪О©╫О©╫О©╫О©╫О©╫б╣О©╫О©╫О©╫О©╫д╦О©╫О©╫О©╫О©╫О©╫
 var currentFall;
 
 
-// ╤╗рЕ╥╫©И╣дяуи╚
+// О©╫О©╫О©╫Е╥╫О©╫О©╫О©╫О©╫О©╫и╚
 colors = ["#fff", "#f00", "#0f0", "#00f"
     , "#c60", "#f0f", "#0ff", "#609"];
 
-// ╤╗рЕ╪╦жж©идэЁЖож╣д╥╫©ИвИ╨о
+// О©╫О©╫О©╫Е╪╦О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫О©╫
 var blockArr = [
-    // ╢З╠М╣зр╩жж©идэЁЖож╣д╥╫©ИвИ╨оё╨Z
+    // О©╫О©╫О©╫О©╫О©╫р╩О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫оёО©╫Z
     [
         {x: TETRIS_COLS / 2 - 1, y: 0, color: 1},
         {x: TETRIS_COLS / 2, y: 0, color: 1},
         {x: TETRIS_COLS / 2, y: 1, color: 1},
         {x: TETRIS_COLS / 2 + 1, y: 1, color: 1}
     ],
-    // ╢З╠М╣з╤Чжж©идэЁЖож╣д╥╫©ИвИ╨оё╨╥╢Z
+    // О©╫О©╫О©╫О©╫з╤О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫оёО©╫О©╫О©╫Z
     [
         {x: TETRIS_COLS / 2 + 1, y: 0, color: 2},
         {x: TETRIS_COLS / 2, y: 0, color: 2},
         {x: TETRIS_COLS / 2, y: 1, color: 2},
         {x: TETRIS_COLS / 2 - 1, y: 1, color: 2}
     ],
-    // ╢З╠М╣зхЩжж©идэЁЖож╣д╥╫©ИвИ╨оё╨ лО
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫оёО©╫ О©╫О©╫
     [
         {x: TETRIS_COLS / 2 - 1, y: 0, color: 3},
         {x: TETRIS_COLS / 2, y: 0, color: 3},
         {x: TETRIS_COLS / 2 - 1, y: 1, color: 3},
         {x: TETRIS_COLS / 2, y: 1, color: 3}
     ],
-    // ╢З╠М╣зкджж©идэЁЖож╣д╥╫©ИвИ╨оё╨L
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫оёО©╫L
     [
         {x: TETRIS_COLS / 2 - 1, y: 0, color: 4},
         {x: TETRIS_COLS / 2 - 1, y: 1, color: 4},
         {x: TETRIS_COLS / 2 - 1, y: 2, color: 4},
         {x: TETRIS_COLS / 2, y: 2, color: 4}
     ],
-    // ╢З╠М╣знЕжж©идэЁЖож╣д╥╫©ИвИ╨оё╨J
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫оёО©╫J
     [
         {x: TETRIS_COLS / 2, y: 0, color: 5},
         {x: TETRIS_COLS / 2, y: 1, color: 5},
         {x: TETRIS_COLS / 2, y: 2, color: 5},
         {x: TETRIS_COLS / 2 - 1, y: 2, color: 5}
     ],
-    // ╢З╠М╣заЫжж©идэЁЖож╣д╥╫©ИвИ╨о : лУ
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫О©╫ : О©╫О©╫
     [
         {x: TETRIS_COLS / 2, y: 0, color: 6},
         {x: TETRIS_COLS / 2, y: 1, color: 6},
         {x: TETRIS_COLS / 2, y: 2, color: 6},
         {x: TETRIS_COLS / 2, y: 3, color: 6}
     ],
-    // ╢З╠М╣зфъжж©идэЁЖож╣д╥╫©ИвИ╨о : ╘ы
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж©О©╫О©╫эЁО©╫О©╫ж╣д╥О©╫О©╫О©╫О©╫О©╫О©╫ : О©╫О©╫
     [
         {x: TETRIS_COLS / 2, y: 0, color: 7},
         {x: TETRIS_COLS / 2 - 1, y: 1, color: 7},
@@ -108,22 +108,22 @@ function initView() {
     maxScoreEle = document.getElementById("maxScoreEle");
 }
 function initData() {
-// ╤ах║Local StorageюО╣дcurScore╪гб╪
+// О©╫О©╫х║Local StorageО©╫О©╫О©╫curScoreО©╫О©╫б╪
     curScore = localStorage.getItem("curScore");
     curScore = curScore == null ? 0 : parseInt(curScore);
     curScoreEle.innerHTML = curScore;
 
-    // ╤ах║Local StorageюО╣дmaxScore╪гб╪
+    // О©╫О©╫х║Local StorageО©╫О©╫О©╫maxScoreО©╫О©╫б╪
     maxScore = localStorage.getItem("maxScore");
     maxScore = maxScore == null ? 0 : parseInt(maxScore);
     maxScoreEle.innerHTML = maxScore;
 
-    // ╤ах║Local StorageюО╣дcurSpeed╪гб╪
+    // О©╫О©╫х║Local StorageО©╫О©╫О©╫curSpeedО©╫О©╫б╪
     curSpeed = localStorage.getItem("curSpeed");
     curSpeed = curSpeed == null ? 1 : parseInt(curSpeed);
     curSpeedEle.innerHTML = curSpeed;
 
-    //д╛хоц©╦Ж╥╫╦Я╤╪ц╩сп
+    //д╛О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫О©╫ц╩О©╫О©╫
     for (var i = 0; i < TETRIS_ROWS; i++) {
         tetris_status[i] = [];
         for (var j = 0; j < TETRIS_COLS; j++) {
@@ -131,12 +131,12 @@ function initData() {
         }
     }
 
-    // ╤ах║Local StorageюО╣дtetris_status╪гб╪
+    // О©╫О©╫х║Local StorageО©╫О©╫О©╫tetris_statusО©╫О©╫б╪
     var tmpStatus = localStorage.getItem("tetris_status");
     tetris_status = tmpStatus == null ? tetris_status : JSON.parse(tmpStatus);
 }
 function addCanvas() {
-// ╢╢╫╗canvasвИ╪Ч
+// О©╫О©╫О©╫О©╫canvasО©╫О©╫О©╫
     createCanvas(TETRIS_ROWS, TETRIS_COLS, CELL_SIZE, CELL_SIZE);
     document.body.appendChild(tetris_canvas);
 }
@@ -165,16 +165,16 @@ function drawBlock() {
     for (var i = 0; i < TETRIS_ROWS; i++) {
         for (var j = 0; j < TETRIS_COLS; j++) {
             if (tetris_status[i][j] == NO_BLOCK) {
-                // ц╩сп╥╫©И╣д╣ь╥╫╩Фжф╟ви╚
+                // ц╩О©╫п╥О©╫О©╫О©╫д╣ь╥О©╫О©╫О©╫О©╫ф╟О©╫и╚
                 tetris_ctx.fillStyle = 'white';
-                // ╩Фжф╬ьпн
+                // О©╫О©╫О©╫ф╬О©╫О©╫О©╫
                 tetris_ctx.fillRect(j * CELL_SIZE + 1
                     , i * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
             }
             else {
-                // иХжцлНЁДяуи╚
+                // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫и╚
                 tetris_ctx.fillStyle = colors[tetris_status[i][j]];
-                // ╩Фжф╬ьпн
+                // О©╫О©╫О©╫ф╬О©╫О©╫О©╫
                 tetris_ctx.fillRect(j * CELL_SIZE + 1
                     , i * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
             }
@@ -203,25 +203,25 @@ var createCanvas = function (rows, cols, cellWidth, cellHeight) {
         tetris_ctx.lineTo(cols * cellWidth, i * cellHeight);
     }
 
-    // ╩ФжфйЗоРмЬбГ╤тс╕╣дб╥╬╤
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫с╕О©╫О©╫б╥О©╫О©╫
     for (var i = 0; i < cols; i++) {
         tetris_ctx.moveTo(i * cellWidth, 0);
         tetris_ctx.lineTo(i * cellWidth, rows * cellHeight);
     }
 
     tetris_ctx.closePath();
-    // иХжц╠й╢╔яуи╚
+    // О©╫О©╫О©╫ц╠й╢О©╫О©╫О©╫и╚
     tetris_ctx.strokeStyle = "#aaa";
-    // иХжцоълУ╢жо╦
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫о╦
     tetris_ctx.lineWidth = 0.3;
-    // ╩ФжфоълУ
+    // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
     tetris_ctx.stroke();
 };
 
 
 window.onkeydown = function (evt) {
     switch (evt.keyCode) {
-        // ╟╢обак║╟оРоб║╠╪Щм╥
+        // О©╫О©╫О©╫О©╫О©╫к║О©╫О©╫О©╫О©╫б║О©╫О©╫О©╫м╥
         case 40:
             if (!isPlaying)
                 return;
@@ -230,19 +230,19 @@ window.onkeydown = function (evt) {
     }
 };
 
-//оРобрф╤╞
+//О©╫О©╫О©╫О©╫О©╫ф╤О©╫
 var moveDown = function () {
-    // ╤╗рЕдэ╥Яоб╣Т╣дфЛ╠Й
+    // О©╫О©╫О©╫О©╫О©╫э╥О©╫О©╫б╣О©╫О©╫О©╫О©╫О©╫О©╫
     var canDown = true;
 
     for (var i = 0; i < currentFall.length; i++) {
-        // еп╤ойг╥Яря╬╜╣╫║╟вН╣воб║╠
+        // О©╫п╤О©╫О©╫г╥О©╫О©╫я╬О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫б║О©╫
         if (currentFall[i].y >= TETRIS_ROWS - 1) {
             canDown = false;
             break;
         }
 
-        // еп╤ообр╩╦Яйг╥Я║╟сп╥╫©И║╠, хГ╧Шобр╩╦Ясп╥╫©Иё╛╡╩дэоРоб╣Т
+        // О©╫п╤О©╫О©╫О©╫р╩О©╫О©╫О©╫г╥О©╫О©╫п╥О©╫О©╫И║╠, О©╫О©╫О©╫О©╫О©╫р╩О©╫О©╫О©╫п╥О©╫О©╫Иё╛О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╣О©╫
         if (tetris_status[currentFall[i].y + 1][currentFall[i].x] != NO_BLOCK) {
             canDown = false;
             break;
@@ -250,26 +250,26 @@ var moveDown = function () {
     }
 
     if (canDown) {
-        // ╫╚обрфг╟╣дц©╦Ж╥╫©И╣д╠Ё╬╟и╚м©Ёи╟ви╚
+        // О©╫О©╫О©╫О©╫О©╫О©╫г╟О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫О©╫д╠О©╫О©╫О©╫и╚м©О©╫и╟О©╫и╚
         for (var i = 0; i < currentFall.length; i++) {
             var cur = currentFall[i];
-            // ц╩сп╥╫©И╣д╣ь╥╫╩Фжф╟ви╚
+            // ц╩О©╫п╥О©╫О©╫О©╫д╣ь╥О©╫О©╫О©╫О©╫ф╟О©╫и╚
             tetris_ctx.fillStyle = 'white';
-            // ╩Фжф╬ьпн
+            // О©╫О©╫О©╫ф╬О©╫О©╫О©╫
             tetris_ctx.fillRect(cur.x * CELL_SIZE + 1
                 , cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
 
-            // ╠ИюЗц©╦Ж╥╫©И, ©ьжфц©╦Ж╥╫©И╣дyвЬ╠Й╪с1║ё
-            // р╡╬мйг©ьжф╥╫©И╤╪об╣Тр╩╦Я
+            // О©╫О©╫О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫О©╫, О©╫О©╫О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫О©╫О©╫yО©╫О©╫О©╫О©╫О©╫1О©╫О©╫
+            // р╡О©╫О©╫О©╫г©О©╫О©╫ф╥О©╫О©╫И╤╪О©╫б╣О©╫р╩О©╫О©╫
             cur.y++;
         }
 
-        // ╫╚обрф╨С╣дц©╦Ж╥╫©И╣д╠Ё╬╟и╚м©Ёи╦ц╥╫©И╣дяуи╚ж╣
+        // О©╫О©╫О©╫О©╫О©╫ф╨О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫О©╫д╠О©╫О©╫О©╫и╚м©О©╫и╦ц╥О©╫О©╫О©╫О©╫О©╫О©╫и╚ж╣
         for (var i = 0; i < currentFall.length; i++) {
             var cur = currentFall[i];
-            // иХжцлНЁДяуи╚
+            // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫и╚
             tetris_ctx.fillStyle = colors[cur.color];
-            // ╩Фжф╬ьпн
+            // О©╫О©╫О©╫ф╬О©╫О©╫О©╫
             tetris_ctx.fillRect(cur.x * CELL_SIZE + 1
                 , cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
         }
@@ -277,35 +277,35 @@ var moveDown = function () {
     else {
         for (var i = 0; i < currentFall.length; i++) {
             var cur = currentFall[i];
-            if (cur.y < 2)//йг╥ЯйДак
+            if (cur.y < 2)//О©╫г╥О©╫О©╫О©╫О©╫О©╫
             {
-                // гЕ©уLocal Storageжп╣д╣╠г╟╩Щ╥жж╣║╒сно╥в╢л╛║╒╣╠г╟кы╤х
+                // О©╫О©╫О©╫Local StorageО©╫п╣д╣О©╫г╟О©╫О©╫О©╫О©╫ж╣О©╫О©╫О©╫О©╫о╥в╢л╛О©╫О©╫О©╫О©╫г╟О©╫ы╤О©╫
                 localStorage.removeItem("curScore");
                 localStorage.removeItem("tetris_status");
                 localStorage.removeItem("curSpeed");
                 isPlaying = false;
-                if (confirm("дЗря╬╜йДакё║йг╥Я╡нйЩеецШё©")) {
-                    // ╤ах║Local StorageюО╣дmaxScore╪гб╪
+                if (confirm("О©╫О©╫О©╫я╬О©╫О©╫О©╫О©╫кёО©╫О©╫г╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫")) {
+                    // О©╫О©╫х║Local StorageО©╫О©╫О©╫maxScoreО©╫О©╫б╪
                     maxScore = localStorage.getItem("maxScore");
                     maxScore = maxScore == null ? 0 : maxScore;
-                    // хГ╧Ш╣╠г╟╩Щ╥ж╢СсзlocalStorageжп╪гб╪╣двН╦ъ╩Щ╥ж
+                    // О©╫О©╫О©╫О©╫О©╫г╟О©╫О©╫О©╫ж╢О©╫О©╫О©╫localStorageО©╫п╪О©╫б╪О©╫О©╫О©╫О©╫ъ╩О©╫О©╫О©╫
                     if (curScore >= maxScore) {
-                        // ╪гб╪вН╦ъ╩Щ╥ж
+                        // О©╫О©╫б╪О©╫О©╫ъ╩О©╫О©╫О©╫
                         localStorage.setItem("maxScore", curScore);
                     }
                 }
                 return;
             } else {
-                // ╟яц©╦Ж╥╫©И╣╠г╟кЫтзн╩жц╦Ён╙╣╠г╟╥╫©И╣дяуи╚ж╣
+                // О©╫О©╫ц©О©╫О©╫О©╫О©╫О©╫И╣╠г╟О©╫О©╫О©╫О©╫н╩О©╫ц╦О©╫н╙О©╫О©╫г╟О©╫О©╫О©╫О©╫О©╫О©╫О©╫и╚ж╣
                 tetris_status[cur.y][cur.x] = cur.color;
             }
         }
 
-        // еп╤ойг╥Ясп║╟©иоШЁЩ║╠╣дпп
+        // О©╫п╤О©╫О©╫г╥О©╫О©╫п║О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
         lineFull();
-        // й╧сцLocal Storage╪гб╪╤Мбчк╧╥╫©И╣дсно╥в╢л╛
+        // й╧О©╫О©╫Local StorageО©╫О©╫б╪О©╫О©╫О©╫О©╫к╧О©╫О©╫О©╫О©╫О©╫О©╫О©╫о╥в╢л╛
         localStorage.setItem("tetris_status", JSON.stringify(tetris_status));
-        //т╜ю╢╣др╩вИ╣╫╣в╨С ©╙й╪р╩вИпб╣д╥╫©И║ё
+        //т╜О©╫О©╫О©╫О©╫р╩О©╫И╣╫О©╫в╨О©╫ О©╫О©╫й╪р╩О©╫О©╫О©╫б╣д╥О©╫О©╫И║ё
         initBlock();
     }
 };
@@ -320,44 +320,50 @@ var lineFull = function () {
             }
         }
 
-        // хГ╧Ш╣╠г╟ппрях╚╡©сп╥╫©Иак
+        // О©╫О©╫О©╫О©╫О©╫г╟О©╫О©╫О©╫О©╫х╚О©╫О©╫О©╫п╥О©╫О©╫О©╫О©╫О©╫
         if (flag) {
-            // ╫╚╣╠г╟╩Щ╥жтЖ╪с100
+            // О©╫О©╫О©╫О©╫г╟О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫100
             curScoreEle.innerHTML = curScore += 100;
-            // ╪гб╪╣╠г╟╩Щ╥ж
+            // О©╫О©╫б╪О©╫О©╫г╟О©╫О©╫О©╫О©╫
             localStorage.setItem("curScore", curScore);
 
-            // ╟я╣╠г╟пп╣дкЫсп╥╫©Иобрфр╩пп║ё
+            // О©╫я╣О©╫г╟О©╫п╣О©╫О©╫О©╫О©╫п╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫р╩О©╫п║О©╫
             for (var k = i; k > 0; k--) {
                 for (var l = 0; l < TETRIS_COLS; l++) {
                     tetris_status[k][l] = tetris_status[k - 1][l];
                 }
             }
-            // оШЁЩ╥╫©И╨Сё╛жьпб╩Фжфр╩╠И╥╫©И
-            drawBlock();      //╒з
+            // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╩О©╫О©╫О©╫р╩О©╫И╥╫О©╫О©╫
+            drawBlock();      //О©╫О©╫
         }
     }
 };
 
 window.onkeydown = function (evt) {
     switch (evt.keyCode) {
-        // ╟╢обак║╟оРоб║╠╪Щм╥
+        // О©╫О©╫О©╫О©╫О©╫к║О©╫О©╫О©╫О©╫б║О©╫О©╫О©╫м╥
         case 40:
             if (!isPlaying)
                 return;
             moveDown();
             break;
-        // ╟╢обак║╟оРвС║╠╪Щм╥
+        // О©╫О©╫О©╫О©╫О©╫к║О©╫О©╫О©╫О©╫С║╠╪О©╫м╥
         case 37:
             if (!isPlaying)
                 return;
             moveLeft();
             break;
-        // ╟╢обак║╟оРср║╠╪Щм╥
+        // О©╫О©╫О©╫О©╫О©╫к║О©╫О©╫О©╫О©╫р║О©╫О©╫О©╫м╥
         case 39:
             if (!isPlaying)
                 return;
             moveRight();
+            break;
+        // Ф▄┴Д╦▀Д╨├Б─°Е░▒Д╦┼Б─²Г╝╜Е╓╢
+        case 38:
+            if (!isPlaying)
+                return;
+            rotate();
             break;
     }
 };
@@ -423,6 +429,85 @@ var moveRight = function () {
             var cur = currentFall[i];
             tetris_ctx.fillStyle = colors[cur.color];
             tetris_ctx.fillRect(cur.x * CELL_SIZE + 1, cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+        }
+    }
+};
+
+// Е╝ Д╧┴Ф≈▀Х╫╛Ф√╧Е²≈Г └Е┤╫Ф∙╟
+var rotate = function () {
+    // Е╝ Д╧┴Х╝╟Е╫∙Х┐╫Е░╕Ф≈▀Х╫╛Г └Ф≈≈Ф═┤
+    var canRotate = true;
+    for (var i = 0; i < currentFall.length; i++) {
+        var preX = currentFall[i].x;
+        var preY = currentFall[i].y;
+        // Е╖▀Г╩┬Д╩╔Г╛╛Д╦┴Д╦╙Ф√╧Е²≈Д╫°Д╦╨Ф≈▀Х╫╛Г └Д╦╜Е©┐,
+        // i == 2Ф≈╤О╪▄Х╞╢Ф≤▌Ф≤╞Ф≈▀Х╫╛Г └Д╦╜Е©┐
+        if (i != 2) {
+            // Х╝║Г╝≈Ф√╧Е²≈Ф≈▀Х╫╛Е░▌Г └xЦ─│yЕ²░Ф═┤
+            var afterRotateX = currentFall[2].x + preY - currentFall[2].y;
+            var afterRotateY = currentFall[2].y + currentFall[2].x - preX;
+            // Е╕┌Ф·°Ф≈▀Х╫╛Е░▌Ф┴─Е°╗Д╫█Г╫╝Е╥╡Ф°┴Ф√╧Е²≈О╪▄Х║╗Ф≤▌Д╦█Х┐╫Ф≈▀Х╫╛
+            if (tetris_status[afterRotateY][afterRotateX + 1] != NO_BLOCK) {
+                canRotate = false;
+                break;
+            }
+            // Е╕┌Ф·°Ф≈▀Х╫╛Е░▌Г └Е²░Ф═┤Е╥╡Г╩▐Х╤┘Е┤╨Д╨├Ф°─Е╥╕Х╬╧Х╬╧Г∙▄
+            if (afterRotateX < 0 || tetris_status[afterRotateY - 1][afterRotateX] != NO_BLOCK) {
+                moveRight();
+                afterRotateX = currentFall[2].x + preY - currentFall[2].y;
+                afterRotateY = currentFall[2].y + currentFall[2].x - preX;
+                break;
+            }
+            if (afterRotateX < 0 || tetris_status[afterRotateY - 1][afterRotateX] != NO_BLOCK) {
+                moveRight();
+                break;
+            }
+            // Е╕┌Ф·°Ф≈▀Х╫╛Е░▌Г └Е²░Ф═┤Е╥╡Г╩▐Х╤┘Е┤╨Д╨├Ф°─Е▐ЁХ╬╧Х╬╧Г∙▄
+            if (afterRotateX >= TETRIS_COLS - 1 ||
+                tetris_status[afterRotateY][afterRotateX + 1] != NO_BLOCK) {
+                moveLeft();
+                afterRotateX = currentFall[2].x + preY - currentFall[2].y;
+                afterRotateY = currentFall[2].y + currentFall[2].x - preX;
+                break;
+            }
+            if (afterRotateX >= TETRIS_COLS - 1 ||
+                tetris_status[afterRotateY][afterRotateX + 1] != NO_BLOCK) {
+                moveLeft();
+                break;
+            }
+        }
+    }
+    // Е╕┌Ф·°Х┐╫Ф≈▀Х╫╛
+    if (canRotate) {
+        // Е╟├Ф≈▀Х╫╛Г╖╩Е┴█Г └Ф╞▐Д╦╙Ф√╧Е²≈Г └Х┐▄Ф≥╞Х┴╡Ф╤┌Ф┬░Г≥╫Х┴╡
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            // Х╝╬Г╫╝Е║╚Е┘┘И╒°Х┴╡
+            tetris_ctx.fillStyle = 'white';
+            // Г╩≤Е┬╤Г÷╘Е╫╒
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1
+                , cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+        }
+        for (var i = 0; i < currentFall.length; i++) {
+            var preX = currentFall[i].x;
+            var preY = currentFall[i].y;
+            // Е╖▀Г╩┬Д╩╔Г╛╛Д╦┴Д╦╙Ф√╧Е²≈Д╫°Д╦╨Ф≈▀Х╫╛Г └Д╦╜Е©┐,
+            // i == 2Ф≈╤О╪▄Х╞╢Ф≤▌Ф≤╞Ф≈▀Х╫╛Г └Д╦╜Е©┐
+            if (i != 2) {
+                currentFall[i].x = currentFall[2].x +
+                    preY - currentFall[2].y;
+                currentFall[i].y = currentFall[2].y +
+                    currentFall[2].x - preX;
+            }
+        }
+        // Е╟├Ф≈▀Х╫╛Е░▌Г └Ф╞▐Д╦╙Ф√╧Е²≈Г └Х┐▄Ф≥╞Х┴╡Ф╤┌Ф┬░Е░└Ф√╧Е²≈Е╞╧Е╨■Г └И╒°Х┴╡
+        for (var i = 0; i < currentFall.length; i++) {
+            var cur = currentFall[i];
+            // Х╝╬Г╫╝Е║╚Е┘┘И╒°Х┴╡
+            tetris_ctx.fillStyle = colors[cur.color];
+            // Г╩≤Е┬╤Г÷╘Е╫╒
+            tetris_ctx.fillRect(cur.x * CELL_SIZE + 1
+                , cur.y * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
         }
     }
 };
